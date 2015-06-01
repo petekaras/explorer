@@ -91,7 +91,7 @@ public class POMParser {
  
   /**
    * Parses a pom.xml file into a POM object.
-   *
+   * TODO: Refactor: should not do so much work on constructor
    * @param File
    *          xmlFile - XML File that should be parsed
    * @throws Exception
