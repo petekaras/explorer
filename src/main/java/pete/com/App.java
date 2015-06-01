@@ -21,10 +21,10 @@ public class App
         try {
           Crawler getter = new POMCrawler(new POMDAOHTTP());
           
-          POM rootPOM = new POM();
-          rootPOM.setArtifactId("spring-core");
-          rootPOM.setGroupId("org.springframework");
-          rootPOM.setVersion("4.0.4.RELEASE");
+          //POM rootPOM = new POM();
+          //rootPOM.setArtifactId("spring-core");
+          //rootPOM.setGroupId("org.springframework");
+          //rootPOM.setVersion("4.0.4.RELEASE");
           //POM data = getter.getDependenciesFromPOM(rootPOM, "-",null);
           getter.getDependenciesFromPOM("org.springframework", "spring-core", "4.0.4.RELEASE", "-", null);
           //sSystem.out.println(data);

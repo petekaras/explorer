@@ -11,6 +11,8 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,6 +25,7 @@ import dao.POMDAO;
 public class POMCrawler implements Crawler {
 
   private static final String MAVEN_ROOT = "https://repo1.maven.org/maven2";
+  private static final Logger LOGGER = Logger.getLogger(POMCrawler.class.getName());
   private POMDAO pomdao;
   
   @Inject
@@ -56,6 +59,7 @@ public class POMCrawler implements Crawler {
     urlStrBuilder.append("/" + rootPOM.getArtifactId() + "-" + rootPOM.getVersion() + ".pom");
 
     String dataFromMaven = null;
+    LOGGER.log(Level.INFO, "GETTING: " + urlStrBuilder.toString());
     try {
       dataFromMaven = (pomdao.getData(urlStrBuilder.toString()));
     } catch (FileNotFoundException e) {
@@ -63,6 +67,10 @@ public class POMCrawler implements Crawler {
 
     } catch (Exception e) {
       throw e;
+    }
+    
+    if(dataFromMaven==null){
+      return null;
     }
     POMParser pp = new POMParser(dataFromMaven);
 
