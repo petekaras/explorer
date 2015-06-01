@@ -23,7 +23,7 @@ public class Maven {
   }
   
   
-  public POM getDependencyTree(@Named("groupID")String groupID,@Named("artifactId")String artifactId,@Named("version")String version) throws Exception{
+  public POM getDependencyTree(@Named("groupId")String groupID,@Named("artifactId")String artifactId,@Named("version")String version) throws Exception{
       return POMCrawler.getPOMWithAllDependencies(groupID,artifactId,version, "-", null);
   }
 }

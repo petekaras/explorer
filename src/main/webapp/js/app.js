@@ -1,29 +1,39 @@
-//var app = angular.module('app', []);
+var app = angular.module('app', [ 'ui.bootstrap' ]);
 
-var app = angular
-.module('app', ['xml'])
-.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('xmlHttpInterceptor');
+app.directive('dendrogram', function() {
+	return {
+		templateUrl : function(elem, attr) {
+			return 'js/Dendrogram.html';
+		}
+	};
 });
 
+app.controller('appController', function($scope, DataService) {
 
-app.controller('appController', function ($scope,userService) {
-	var data = userService.getSubredditsSubmittedToBy('yoitsnate');
-	 
-  });
+	$scope.getMavenData = function(form) {
 
-angular.module("app").service("userService",
-		function($http) {
-		  return {
-		    getSubredditsSubmittedToBy: function(user) {
-		    	var url = "http://api.reddit.com/user/yoitsnate/submitted.json";
-		    	var urlMaven = "https://repo1.maven.org/maven2/com/jolira/guice/3.0.0/guice-3.0.0.pom";
-		    	var urlMaven2 = "http://search.maven.org/solrsearch/select?q=guice&rows=20&wt=json";
-		    	return $http.get(urlMaven2).then(function(response) {
-		    	console.log('---' + response);
-		        return response;
-		      });
-		    }
-		  };
-		});
+		if (form.$valid) {
+			DataService.getData($scope, {
+				'groupId' : $scope.group,
+				'artifactId' : $scope.artifact,
+				'version' : $scope.version
+			});
+		}
+	};
 
+});
+
+/**
+ * TODO: integrate better into Angular JS
+ */
+function init() {
+	// alert('loading');
+	// var ROOT = 'https://sigma-cortex-91512.appspot.com/_ah/api';
+	var ROOT = 'http://localhost:8080/_ah/api/';
+	// var CLIENT_ID =
+	// '39770402649-5ogij7343kcteu7lv2emk6jdfpohe0tc.apps.googleusercontent.com';
+	gapi.client.load('maven', 'v1', function() {
+		// alert('loaded OK');
+	}, ROOT);
+
+}
