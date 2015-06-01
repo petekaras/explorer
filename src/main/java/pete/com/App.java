@@ -26,7 +26,7 @@ public class App
           //rootPOM.setGroupId("org.springframework");
           //rootPOM.setVersion("4.0.4.RELEASE");
           //POM data = getter.getDependenciesFromPOM(rootPOM, "-",null);
-          getter.getDependenciesFromPOM("org.springframework", "spring-core", "4.0.4.RELEASE", "-", null);
+          getter.getPOMWithAllDependencies("org.springframework", "spring-core", "4.0.4.RELEASE", "-", null);
           //sSystem.out.println(data);
         } catch (Exception e) {
           // TODO Auto-generated catch block

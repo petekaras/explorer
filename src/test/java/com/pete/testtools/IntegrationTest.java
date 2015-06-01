@@ -1,4 +1,4 @@
-package pete.com.testtools;
+package com.pete.testtools;
 
 import java.io.IOException;
 import java.io.InputStream;

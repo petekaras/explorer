@@ -1,4 +1,4 @@
-package pete.com;
+package com.pete.crawler;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.pete.POMTests;
 import com.pete.crawler.Crawler;
 import com.pete.crawler.POMCrawler;
 import com.pete.pom.POM;
@@ -15,7 +16,7 @@ import com.pete.pom.POM;
 import dao.POMDAO;
 
 public class POMCrawlerTest extends POMTests {
-  private Crawler POMCrawler;
+  private POMCrawler POMCrawler;
   private POMDAO mockPomdao;
   String indent;
   String parentArtifactId;
@@ -46,7 +47,7 @@ public class POMCrawlerTest extends POMTests {
   public void testGetrootInfoFromPOMOverloaded() throws Exception {
 
 
-    POM data = POMCrawler.getDependenciesFromPOM(rootPOM.getGroupId(),rootPOM.getArtifactId(),rootPOM.getVersion(), indent, parentArtifactId);
+    POM data = POMCrawler.getPOMWithAllDependencies(rootPOM.getGroupId(),rootPOM.getArtifactId(),rootPOM.getVersion(), indent, parentArtifactId);
     assertEquals("pete", data.getArtifactId());
   }  
 

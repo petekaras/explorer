@@ -28,6 +28,10 @@ import java.util.Random;
  */
 
 
+
+
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -56,7 +60,7 @@ public class POM {
   dependencies = new LinkedList<POM>();
  }
 
-
+ @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
  public String getModelVersion() {
   return modelVersion;
  }
@@ -64,7 +68,7 @@ public class POM {
  public void setModelVersion(final String modelVersion) {
   this.modelVersion = modelVersion;
  }
- 
+ @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
  public String getGroupId() {
   return groupId;
  }
@@ -76,11 +80,11 @@ public class POM {
  public String getArtifactId() {
   return artifactId;
  }
- 
+ @ApiResourceProperty(name = "name")
  public void setArtifactId(final String artifactId) {
   this.artifactId = artifactId;
  }
- 
+ @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
  public String getVersion() {
   return version;
  }
@@ -88,7 +92,7 @@ public class POM {
  public void setVersion(final String version) {
   this.version = version;
  }
- 
+ @ApiResourceProperty(name = "children")
  public List<POM> getDependencies() {
   return Collections.unmodifiableList( dependencies );
  }

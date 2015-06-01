@@ -1,4 +1,4 @@
-package pete.com.testtools.dsl;
+package com.pete.testtools.dsl;
 /**
  * Provides a common inteface to get the URL to use doddle API.
  * @author peter

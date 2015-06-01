@@ -24,12 +24,6 @@ public class Maven {
   
   
   public POM getDependencyTree(@Named("groupID")String groupID,@Named("artifactId")String artifactId,@Named("version")String version) throws Exception{
-    POM pom = null;
-    try{
-      pom = POMCrawler.getDependenciesFromPOM(groupID,artifactId,version, "-", null);
-    }catch(Exception exception){
-      LOGGER.log(Level.INFO, exception.getMessage());
-    }
-    return pom;
+      return POMCrawler.getPOMWithAllDependencies(groupID,artifactId,version, "-", null);
   }
 }

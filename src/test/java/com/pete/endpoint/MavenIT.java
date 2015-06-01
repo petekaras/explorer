@@ -1,4 +1,4 @@
-package pete.com.endpoint;
+package com.pete.endpoint;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,8 +7,8 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.junit.Test;
 
-import pete.com.testtools.IntegrationTest;
-import pete.com.testtools.dsl.RequestMavenDependencyData;
+import com.pete.testtools.IntegrationTest;
+import com.pete.testtools.dsl.RequestMavenDependencyData;
 /**
  * This integration test actually calls out to the Maven repo.
  * It is just a smoke test to ensure app works end to end. 

@@ -1,4 +1,4 @@
-package pete.com.testtools.dsl;
+package com.pete.testtools.dsl;
 
 public class RequestMavenDependencyData implements DataRequest{
   private String groupId;

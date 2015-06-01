@@ -1,4 +1,4 @@
-package pete.com;
+package com.pete;
 
 import static org.junit.Assert.assertEquals;
 

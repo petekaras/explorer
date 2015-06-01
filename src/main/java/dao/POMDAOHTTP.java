@@ -2,8 +2,10 @@ package dao;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -21,10 +23,11 @@ public class POMDAOHTTP implements POMDAO {
    *
    * @param urlStr - the fully formatted URL string
    * @return the response body as a string or null if anything other than a HTTP OK found.
+   * @throws IOException 
    * @throws FileNotFoundException
    * @throws UnknownHostException
    */
-  public String getData(String urlStr) throws Exception {
+  public String getData(String urlStr) throws IOException {
     String result = null;
 
       URL url = new URL(urlStr);

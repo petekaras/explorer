@@ -1,4 +1,4 @@
-package pete.com;
+package com.pete;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

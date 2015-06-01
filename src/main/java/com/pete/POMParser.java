@@ -30,10 +30,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+
+
 
 
 
@@ -45,11 +51,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.pete.endpoint.Maven;
 import com.pete.pom.POM;
 
 /**
  * Parses a POM XML into a POM object.
- *
+ * TODO: review and reimplement a lot of this. Dont like static code and generally needs a tidy up...
  * @author Ognjen Bubalo
  * @version $Id$
  */
@@ -57,6 +64,8 @@ public class POMParser {
  private POM pomObject;
  private static String lastDescription;
  private static String lastName;
+ 
+ private static final Logger LOGGER = Logger.getLogger(POMParser.class.getName());
  
  /**
   * Returns the last parsed description.
@@ -112,20 +121,19 @@ public class POMParser {
  
  private void parsePOM(Document doc) {
   try {
-   Element eElement = doc.getDocumentElement();
-   //System.out.println("Root element :" + eElement.getNodeName()); //project
+   Element eElement = doc.getDocumentElement();  
    if (eElement.getNodeType() == Node.ELEMENT_NODE) {
 
-    //System.out.println("modelVersion : " + getTagValue("modelVersion", eElement));
+
     pomObject.setModelVersion(getTagValue("modelVersion", eElement));
 
-    //System.out.println("groupId : " + getTagValue("groupId", eElement));
+
     pomObject.setGroupId(getTagValue("groupId", eElement));
 
-    //System.out.println("artifactId : " + getTagValue("artifactId", eElement));
+
     pomObject.setArtifactId(getTagValue("artifactId", eElement));
 
-    //System.out.println("version : " + getTagValue("version", eElement));
+
     pomObject.setVersion(getTagValue("version", eElement));
     POMParser.lastDescription = getTagValue("description", eElement);
     POMParser.lastName = getTagValue("name", eElement);
@@ -133,15 +141,14 @@ public class POMParser {
     NodeList hList = eElement.getElementsByTagName("dependencies");
 
     if (hList.getLength()>0) {
-     //System.out.println("Node Name : " + hList.item(0).getNodeName()); //dependencies
+
      if (hList.item(0).getNodeType() == Node.ELEMENT_NODE) {
 
       NodeList depList = hList.item(0).getChildNodes();
 
       for (int i=0;i<depList.getLength();++i) { //dependency 1, 2, 3, ..
        if (depList.item(i).getNodeType() == Node.ELEMENT_NODE) {
-       // System.out.println("Dependency : " + depList.item(i).getNodeName()); 
-        //System.out.println("FIGY: " + getTagValue("groupId",(Element)depList.item(i)));
+
         POM pomDependency = new POM();
         pomDependency.setArtifactId(getTagValue("artifactId",(Element)depList.item(i)));
         pomDependency.setGroupId(getTagValue("groupId",(Element)depList.item(i)));
@@ -155,7 +162,7 @@ public class POMParser {
     }
    }
   } catch (Exception e) {
-  // e.printStackTrace();
+    LOGGER.log(Level.WARNING, e.getMessage());
   }
  }
  
@@ -163,10 +170,13 @@ public class POMParser {
   * Parses a pom.xml String into a POM object.
   *
   * @param String xmlFile - The String in XML format, that should be parsed into a POM object.
+ * @throws ParserConfigurationException 
+ * @throws IOException 
+ * @throws SAXException 
  * @throws Exception 
   * @see POMParser#POMParser(File)
   */
- public POMParser(String xmlFile) throws Exception {
+ public POMParser(String xmlFile) throws ParserConfigurationException, SAXException, IOException {
   pomObject = new POM();
 
 
@@ -186,7 +196,7 @@ public class POMParser {
    Node nValue = (Node) nlList.item(0);
    returner = nValue.getNodeValue();
   } catch (Exception e) {
-   //System.err.println(sTag+" tag does not exist");
+
   }
   return returner;
  }

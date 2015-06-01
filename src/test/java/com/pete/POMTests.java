@@ -1,4 +1,4 @@
-package pete.com;
+package com.pete;
 
 public class POMTests {
 
