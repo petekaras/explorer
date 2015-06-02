@@ -4,7 +4,8 @@ app.service('DataService', function() {
 		gapi.client.maven.maven.getDependencyTree(details).execute(function(resp) {
 			if(!resp.code){
 
-				alert('success:' + angular.fromJson(resp));
+				
+				$scope.data = resp;
 				$scope.$apply();
 
 			}else{	
