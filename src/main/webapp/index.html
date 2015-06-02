@@ -21,9 +21,12 @@
 
 <script src="js/DataService.js"></script>
 <script src="js/TreeDirective.js"></script>
+<script src="js/table/ng-table.min.js"></script>
 
 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 <link href="js/Tree.css" rel="stylesheet">
+<link href="js/table/ng-table.min.css" rel="stylesheet">
+<link href="js/site.css" rel="stylesheet">
 </head>
 
 
@@ -34,12 +37,55 @@
 			<h1>Dependency</h1>
 			<p>Search for Maven artifacts and visualize their dependencies</p>
 		</div>
+		<tabset justified="true"> 
+			<tab heading="Search for an Artifact"> 
+				<form name="simpleSearch" novalidate>
+					 <input type="text" ng-model="artifact" class="form-control" class="form-control" id="arifact-id" name="artifact-id" placeholder="Artifact ID" required=""> 
+					 <input class="btn btn-primary" type="submit" value="Search" ng-click="getSimpleMavenData(search)">
+				</form>
+				
+		
+		    <table ng-table="tableParams" class="table">
+		    <tbody>
+		        <tr ng-repeat="library in $data" ng-click="getMavenDataFromTableClick(library)">
+		            <td data-title="'Group Id'">
+		                {{library.groupId}}
+		            </td>
+		            <td data-title="'Artifact Id'">
+		                {{library.artifactId}}
+		            </td>
+		            <td data-title="'Version'">
+		                {{library.version}}
+		            </td>		            
+		        </tr>
+		    </tbody>
 
-		<form name="search" novalidate>
-			<input type="text" ng-model="group" class="form-control" class="form-control" id="group-id" name="group-id" placeholder="Group ID" required=""> <input type="text" ng-model="artifact"
-				class="form-control" class="form-control" id="arifact-id" name="artifact-id" placeholder="Artifact ID" required=""> <input type="text" ng-model="version" class="form-control"
-				class="form-control" id="version" name="version" placeholder="Version" required=""> <input class="btn btn-primary" type="submit" value="Search" ng-click="getMavenData(search)">
-		</form>
+		    </table>
+
+
+			</tab> 
+		
+		
+			<tab heading="Display an Artifact">
+
+				<form name="search" novalidate>
+					<input type="text" ng-model="group" class="form-control" class="form-control" id="group-id" name="group-id" placeholder="Group ID" required=""> <input type="text" ng-model="artifact"
+						class="form-control" class="form-control" id="arifact-id" name="artifact-id" placeholder="Artifact ID" required=""> <input type="text" ng-model="version" class="form-control"
+						class="form-control" id="version" name="version" placeholder="Version" required=""> <input class="btn btn-primary" type="submit" value="Search" ng-click="getMavenData(search)">
+				</form>
+			</tab> 
+			
+			<tab heading="About this project">
+			<p>Here are projects and tools used to build this service:</p>
+			<ul>
+			<li>Angular</li>
+			<li>D3</li>
+			<li>ng-table</li>
+			</ul>
+			
+			</tab>
+		
+		</tabset>
 
 
 		<tree-visualization val="data"></tree-visualization>
