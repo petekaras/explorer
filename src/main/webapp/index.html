@@ -39,9 +39,9 @@
 		</div>
 		<tabset justified="true"> 
 			<tab heading="Search for an Artifact"> 
-				<form name="simpleSearch" novalidate>
-					 <input type="text" ng-model="artifact" class="form-control" class="form-control" id="arifact-id" name="artifact-id" placeholder="Artifact ID" required=""> 
-					 <input class="btn btn-primary" type="submit" value="Search" ng-click="getSimpleMavenData(search)">
+				<form name="simpleSearchForm" novalidate>
+					 <input type="text" ng-model="simpleSearch.artifactId" class="form-control"  placeholder="Artifact ID" required=""> 
+					 <input class="btn btn-primary" type="submit" value="Search" ng-click="getSimpleMavenData(simpleSearchForm,simpleSearch)">
 				</form>
 				
 		
@@ -49,10 +49,10 @@
 		    <tbody>
 		        <tr ng-repeat="library in $data" ng-click="getMavenDataFromTableClick(library)">
 		            <td data-title="'Group Id'">
-		                {{library.groupId}}
+		                {{library.group}}
 		            </td>
 		            <td data-title="'Artifact Id'">
-		                {{library.artifactId}}
+		                {{library.name}}
 		            </td>
 		            <td data-title="'Version'">
 		                {{library.version}}

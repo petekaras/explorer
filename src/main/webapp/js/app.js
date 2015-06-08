@@ -2,13 +2,10 @@ var app = angular.module('app', [ 'ui.bootstrap','ngTable' ]);
 
 app.controller('appController', function($scope, DataService, ngTableParams) {
     
-    $scope.libraries = [{groupId: "org.springframework", artifactId: "spring-core",version:"4.0.4.RELEASE"},
-                    {groupId: "merlin", artifactId: "merlin-api",version:"3.3.0"},
-                    {groupId: "org.apache.camel", artifactId: "camel",version:"2.15.2"},
-                    {groupId: "com.fizz-buzz", artifactId: "fb-android-dagger",version:"1.0.6"},
-                    {groupId: "org.gridkit.jvmtool", artifactId: "hprof-heap",version:"0.3.6"}];
+    $scope.libraries = [{group: "org.springframework", name: "spring-core",version:"4.0.4.RELEASE"},
+                    {group: "merlin", name: "merlin-api",version:"3.3.0"}];
     
-    
+
     
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -27,7 +24,14 @@ app.controller('appController', function($scope, DataService, ngTableParams) {
     
     
     
-    
+    $scope.getSimpleMavenData = function(form,data) {		
+
+	if (form.$valid) {
+	    DataService.getSearchData($scope, {
+		'artifactId' : data.artifactId
+	    });
+	}
+    };
     
     $scope.getMavenData = function(form) {		
 		
@@ -44,8 +48,8 @@ app.controller('appController', function($scope, DataService, ngTableParams) {
 
 
 	    DataService.getData($scope, {
-		'groupId' : library.groupId,
-		'artifactId' : library.artifactId,
+		'groupId' : library.group,
+		'artifactId' : library.name,
 		'version' : library.version
 	    });
 

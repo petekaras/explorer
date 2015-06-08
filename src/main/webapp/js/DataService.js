@@ -9,13 +9,28 @@ app.service('DataService', function() {
 				$scope.$apply();
 
 			}else{	
-//				MsgService.push('danger',ERROR_GENERAL);
-//				$scope.alerts = MsgService.list();
-//				$scope.$apply();
 				alert('fail');	
 
 				
 			}
 	 });		
 	}
+	
+	this.getSearchData = function($scope,details) {	
+		gapi.client.maven.maven.getLatestArtifacts(details).execute(function(resp) {
+			if(!resp.code){
+
+
+				$scope.libraries = resp.items;
+				$scope.tableParams.reload();
+				$scope.$apply();
+				
+
+			}else{	
+				alert('fail');	
+
+				
+			}
+	 });		
+	}	
 });
