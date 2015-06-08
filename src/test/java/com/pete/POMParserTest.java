@@ -7,13 +7,15 @@ import org.junit.Test;
 
 import com.pete.POMParser;
 import com.pete.pom.POM;
+import com.pete.testtools.TestHelper;
 
 public class POMParserTest extends POMTests {
   private POMParser pomParser = null;
   
   @Before
   public void setUp() throws Exception {
-    pomParser = new POMParser(XML_FILE);
+    String file = TestHelper.getFileAsString(XML_FILE);
+    pomParser = new POMParser(file);
   }
 
   @Test

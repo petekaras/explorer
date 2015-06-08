@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.google.api.server.spi.guice.GuiceSystemServiceServletModule;
 import com.pete.crawler.Crawler;
-import com.pete.crawler.POMCrawler;
+import com.pete.crawler.MavenCrawler;
 import com.pete.endpoint.Constants;
 import com.pete.endpoint.Maven;
 
@@ -28,7 +28,7 @@ public class GuiceSSSModule extends GuiceSystemServiceServletModule{
     Set<Class<?>> serviceClasses = new HashSet<Class<?>>();
     serviceClasses.add(Maven.class);
     bind(POMDAO.class).to(POMDAOHTTP.class);
-    bind(Crawler.class).to(POMCrawler.class);
+    bind(Crawler.class).to(MavenCrawler.class);
 
     this.serveGuiceSystemServiceServlet(Constants.ENDPOINT_URL, serviceClasses);
   }

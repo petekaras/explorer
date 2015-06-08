@@ -2,7 +2,17 @@ package com.pete.pom;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.appengine.repackaged.org.codehaus.jackson.map.annotate.JsonRootName;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.pete.crawler.POMDeserializer;
 /*
  * Analyzes third party libraries of a Java applications
  * Copyright (C) 2011 Ogi Werest
@@ -27,25 +37,20 @@ import java.util.Random;
  *     $LastChangedBy$
  */
 
-
-
-
-import com.google.api.server.spi.config.AnnotationBoolean;
-import com.google.api.server.spi.config.ApiResourceProperty;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-
-
-
-
 public class POM {
 
  private String modelVersion;
+ @Expose
+ @SerializedName("group")
+ @JsonProperty(value = "g")
  private String groupId;
  @Expose
  @SerializedName("name")
+ @JsonProperty(value = "a")
  private String artifactId;
+ @Expose
+ @SerializedName("version")
+ @JsonProperty(value = "latestVersion")
  private String version;
  @Expose
  @SerializedName("children")
@@ -54,7 +59,7 @@ public class POM {
 
 
  public POM() {
- groupId = "(null)";
+  groupId = "(null)";
   artifactId = "(null)";
   version = "(null)";
   dependencies = new LinkedList<POM>();
@@ -146,6 +151,5 @@ public class POM {
    return false;
   return true;
  }
- 
- 
+  
 }

@@ -1,7 +1,7 @@
 package pete.com;
 
 import com.pete.crawler.Crawler;
-import com.pete.crawler.POMCrawler;
+import com.pete.crawler.MavenCrawler;
 
 import dao.POMDAOHTTP;
 
@@ -15,7 +15,7 @@ public class App
     {
       
         try {
-          Crawler getter = new POMCrawler(new POMDAOHTTP());
+          Crawler getter = new MavenCrawler(new POMDAOHTTP());
           
           //POM rootPOM = new POM();
 

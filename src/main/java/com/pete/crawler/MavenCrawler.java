@@ -7,22 +7,29 @@ import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.xml.sax.SAXException;
 
 import com.google.inject.Inject;
 import com.pete.POMParser;
 import com.pete.pom.POM;
+import com.pete.pom.POMResponse;
+import com.pete.pom.POMSummary;
 
 import dao.POMDAO;
 
-public class POMCrawler implements Crawler {
+public class MavenCrawler implements Crawler {
   // TODO: externalise into a properties file.
   private static final String MAVEN_ROOT = "https://repo1.maven.org/maven2";
-  private static final Logger LOGGER = Logger.getLogger(POMCrawler.class.getName());
+  private static final String ARTIFACT_ID_PLACEHOLDER = "<artifactId>";
+  private static final int FIND_COUNT = 20;
+  private static final String MAVEN_API_ROOT = "http://search.maven.org/solrsearch/select?q=a:" + ARTIFACT_ID_PLACEHOLDER + "&rows=" + FIND_COUNT
+      + "&wt=json";
+  private static final Logger LOGGER = Logger.getLogger(MavenCrawler.class.getName());
   private POMDAO pomdao;
 
   @Inject
-  public POMCrawler(POMDAO pomDao) {
+  public MavenCrawler(POMDAO pomDao) {
     this.pomdao = pomDao;
   }
 
@@ -58,7 +65,8 @@ public class POMCrawler implements Crawler {
     try {
       dataFromMaven = (pomdao.getData(urlStrBuilder.toString()));
     } catch (IOException ioex) {
-      LOGGER.log(Level.WARNING, "Error getting data for : " + rootPOM.getGroupId() + ":" + rootPOM.getArtifactId() + ":" + rootPOM.getVersion() + "  " + ioex.getMessage());
+      LOGGER.log(Level.WARNING, "Error getting data for : " + rootPOM.getGroupId() + ":" + rootPOM.getArtifactId() + ":" + rootPOM.getVersion()
+          + "  " + ioex.getMessage());
       return null;
     }
     if (dataFromMaven == null) {
@@ -91,5 +99,30 @@ public class POMCrawler implements Crawler {
 
     return rootPOM;
   }
+
+  @Override
+  public List<POMSummary> getPOMsByArtifactId(String artifactId) {
+    String mavenList;
+    try {
+      String searchURL = MAVEN_API_ROOT.replace(ARTIFACT_ID_PLACEHOLDER, artifactId);
+      mavenList = pomdao.getData(searchURL);
+    } catch (IOException ioex) {
+      LOGGER.log(Level.WARNING, "Error getting data for : " + artifactId + " : " + ioex.getMessage());
+      return null;
+    }
+    
+    ObjectMapper objectMapper = new ObjectMapper();
+    POMResponse response = null;
+    try {
+      response = objectMapper.readValue(mavenList, POMResponse.class);
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, "Error reading JSON data for : " + artifactId + " : " + e.getMessage());
+      return null;
+    }
+
+    return response.listOfPoms;
+  }
+
+
 
 }

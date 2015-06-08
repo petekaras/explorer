@@ -1,6 +1,9 @@
 package com.pete.crawler;
 
+import java.util.List;
+
 import com.pete.pom.POM;
+import com.pete.pom.POMSummary;
 
 public interface Crawler {
   /**
@@ -17,6 +20,12 @@ public interface Crawler {
    */
   public abstract POM getPOMWithAllDependencies(String groupID, String artifactId, String version, String indent, String parentArtifactId);
 
+  /**
+   * Find latest POM versions by artifactID
+   * @param artifactId 
+   * @return list of POMs without dependencies loaded
+   */
+  public abstract List<POMSummary> getPOMsByArtifactId(String artifactId);
 
 
 }
