@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.pete.testtools.IntegrationTest;
@@ -29,6 +30,20 @@ public class MavenIT extends IntegrationTest{
      * Test just to see if our requested data contains real data
      */
     assertEquals(true, result.contains("junit"));
+
+  }
+  
+  @Test @Ignore
+  public void shouldgetMavenDependenciesAndVariables() throws ClientProtocolException, IOException, InterruptedException {
+
+    String url = new RequestMavenDependencyData.Builder().groupId("net.tirasa.connid.bundles.soap").artifactId("soap").version("1.3.0").build().getURL();
+    System.out.println("GETTING: " + url);
+    String result = get(url);   
+    
+    /**
+     * Test just to see if our requested data contains real data
+     */
+    assertEquals(true, result.contains("org.slf4j"));
 
   }
   

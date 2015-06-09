@@ -1,7 +1,9 @@
 package com.pete.pom;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -55,6 +57,8 @@ public class POM {
  @Expose
  @SerializedName("children")
  private LinkedList<POM> dependencies;
+ 
+ private Map<String, String> properties;
 
 
 
@@ -63,6 +67,7 @@ public class POM {
   artifactId = "(null)";
   version = "(null)";
   dependencies = new LinkedList<POM>();
+  properties = new HashMap<String, String>();
  }
 
  @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -106,7 +111,15 @@ public class POM {
   this.dependencies.add(pom);
  }
  
- public String toString() {
+ public void addProperty(final String key, final String value) {
+   this.properties.put(key, value);
+  }
+ 
+ public Map<String, String> getProperties() {
+  return properties;
+}
+
+public String toString() {
   return "modelVersion: "+ modelVersion + " groupId: " + groupId + " artifactId:" + artifactId + " version: " + version;
  }
  

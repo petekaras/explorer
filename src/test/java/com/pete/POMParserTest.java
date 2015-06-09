@@ -5,13 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.pete.POMParser;
 import com.pete.pom.POM;
 import com.pete.testtools.TestHelper;
 
 public class POMParserTest extends POMTests {
   private POMParser pomParser = null;
-  
+
   @Before
   public void setUp() throws Exception {
     String file = TestHelper.getFileAsString(XML_FILE);
@@ -28,9 +27,33 @@ public class POMParserTest extends POMTests {
 
   @Test
   public void shouldParseDependencies() throws Exception {
-    
+
     POM pom = pomParser.getPomObject();
     assertEquals(4, pom.getDependencies().size());
+
+  }
+
+  @Test
+  public void shouldParseProperties() throws Exception {
+
+    POM pom = pomParser.getPomObject();
+    assertEquals(3, pom.getProperties().size());
+
+  }
+
+  @Test
+  public void shouldParsePropertyKey() throws Exception {
+
+    POM pom = pomParser.getPomObject();
+    assertEquals(true, pom.getProperties().containsKey("maven.version"));
+
+  }
+
+  @Test
+  public void shouldParsePropertyValue() throws Exception {
+
+    POM pom = pomParser.getPomObject();
+    assertEquals(true, pom.getProperties().containsValue("3.0.0"));
 
   }
 

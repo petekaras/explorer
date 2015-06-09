@@ -27,10 +27,8 @@ package com.pete;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,21 +36,15 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-
-
-
-
-
-
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.pete.endpoint.Maven;
+import com.pete.crawler.POMVariableResolver;
 import com.pete.pom.POM;
+import com.pete.pom.POMResponse;
 
 /**
  * Parses a POM XML into a POM object.
@@ -90,7 +82,7 @@ public class POMParser {
   *
   * @return the parsed pomObject
   */
- public POM getPomObject() {
+ public POM getPomObject() {   
   return pomObject;
  }
  
@@ -138,6 +130,20 @@ public class POMParser {
     POMParser.lastDescription = getTagValue("description", eElement);
     POMParser.lastName = getTagValue("name", eElement);
 
+    //REFACTOR into same code as dependecy processing
+    NodeList propertiesNode= eElement.getElementsByTagName("properties");
+    if(propertiesNode.getLength()>0){
+      NodeList propertiesList = propertiesNode.item(0).getChildNodes();
+      for (int i=0;i<propertiesList.getLength();++i) { 
+        if (propertiesList.item(i).getNodeType() == Node.ELEMENT_NODE) {
+          Element element = (Element)propertiesList.item(i);
+          pomObject.addProperty(element.getTagName(),element.getTextContent());
+        }
+      }
+    }
+
+    
+    
     NodeList hList = eElement.getElementsByTagName("dependencies");
 
     if (hList.getLength()>0) {
@@ -152,7 +158,7 @@ public class POMParser {
         POM pomDependency = new POM();
         pomDependency.setArtifactId(getTagValue("artifactId",(Element)depList.item(i)));
         pomDependency.setGroupId(getTagValue("groupId",(Element)depList.item(i)));
-        if (getTagValue("version",(Element)depList.item(i))!=null){
+        if (getTagValue("version",(Element)depList.item(i))!=null){         
          pomDependency.setVersion(getTagValue("version",(Element)depList.item(i)));
         }
         pomObject.addDependency(pomDependency);
