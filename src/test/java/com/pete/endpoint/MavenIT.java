@@ -33,10 +33,10 @@ public class MavenIT extends IntegrationTest{
 
   }
   
-  @Test @Ignore
+  @Test @Ignore("Fails with a circular dependency")
   public void shouldgetMavenDependenciesAndVariables() throws ClientProtocolException, IOException, InterruptedException {
 
-    String url = new RequestMavenDependencyData.Builder().groupId("net.tirasa.connid.bundles.soap").artifactId("soap").version("1.3.0").build().getURL();
+    String url = new RequestMavenDependencyData.Builder().groupId("org.seleniumhq.webdriver").artifactId("webdriver-selenium").version("0.9.7376").build().getURL();
     System.out.println("GETTING: " + url);
     String result = get(url);   
     

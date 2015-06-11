@@ -26,7 +26,17 @@ public class POMParserTest extends POMTests {
   }
 
   @Test
-  public void shouldParseDependencies() throws Exception {
+  public void shouldParseDependency() throws Exception {
+    POM pom = pomParser.getPomObject();
+    for(POM dependency : pom.getDependencies()){
+      if(dependency.getArtifactId().equals("jopt-simple")){
+        assertEquals(dependency.getVersion(), "4.6");
+      }
+    }
+  }
+  
+  @Test
+  public void shouldResolveDependency() throws Exception {
 
     POM pom = pomParser.getPomObject();
     assertEquals(4, pom.getDependencies().size());
@@ -37,7 +47,7 @@ public class POMParserTest extends POMTests {
   public void shouldParseProperties() throws Exception {
 
     POM pom = pomParser.getPomObject();
-    assertEquals(3, pom.getProperties().size());
+    assertEquals(4, pom.getProperties().size());
 
   }
 

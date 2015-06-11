@@ -1,5 +1,6 @@
 package com.pete.testtools;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -26,10 +27,15 @@ public class TestHelper {
     String file = null;
     try {
       Path resPath = Paths.get(url.toURI());
-      file = new String(Files.readAllBytes(resPath), "UTF8");
+      file = new String(Files.readAllBytes(resPath), "UTF8");      
     } catch (IOException | URISyntaxException e) {
       LOGGER.log(Level.WARNING, "Cannot read test data: " + filePath + ":" + e);
     }
     return file;
+  }
+  
+  public static File getFile(final String filePath) throws URISyntaxException {
+    java.net.URL url = TestHelper.class.getResource(filePath);
+    return new File(url.toURI());
   }
 }

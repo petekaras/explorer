@@ -60,9 +60,30 @@ public class POM {
  
  private Map<String, String> properties;
 
+ private ParentPOM parentPOM;
+ /**
+  * Wether this POM has unresolved dependencies
+  */
+ private boolean resolved = false;
 
 
- public POM() {
+ public boolean isResolved() {
+  return resolved;
+}
+
+public void setResolved(boolean hasUnresolvedDependencies) {
+  this.resolved = hasUnresolvedDependencies;
+}
+
+public ParentPOM getParentPOM() {
+  return parentPOM;
+}
+
+public void setParentPOM(ParentPOM parentPOM) {
+  this.parentPOM = parentPOM;
+}
+
+public POM() {
   groupId = "(null)";
   artifactId = "(null)";
   version = "(null)";

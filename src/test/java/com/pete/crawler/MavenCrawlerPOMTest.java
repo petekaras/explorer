@@ -41,8 +41,6 @@ public class MavenCrawlerPOMTest extends POMTests {
 
   @Test
   public void shouldGetrootInfoFromPOM() throws Exception {
-
-
     POM data = MavenCrawler.getDependenciesFromPOM(rootPOM, indent, parentArtifactId);
     assertEquals("pete", data.getArtifactId());
   }

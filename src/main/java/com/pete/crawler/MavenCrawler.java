@@ -93,7 +93,9 @@ public class MavenCrawler implements Crawler {
     for (POM pom : poms) {
       rootPOM.addDependency(pom);
       if (pom != null && !rootPOM.getVersion().contains("$") && !pom.getArtifactId().equals(parentArtifactId)) {
-        getDependenciesFromPOM(pom, indent + "-", parentArtifactId);
+        if(POMVariableResolver.isResolved(pom.getVersion())){
+          getDependenciesFromPOM(pom, indent + "-", parentArtifactId);
+        }
       }
     }
 
