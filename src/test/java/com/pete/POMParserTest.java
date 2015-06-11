@@ -47,7 +47,7 @@ public class POMParserTest extends POMTests {
   public void shouldParseProperties() throws Exception {
 
     POM pom = pomParser.getPomObject();
-    assertEquals(4, pom.getProperties().size());
+    assertEquals(3, pom.getProperties().size());
 
   }
 
