@@ -64,7 +64,7 @@ public class POM {
  /**
   * Wether this POM has unresolved dependencies
   */
- private boolean resolved = false;
+ private boolean resolved = true;
 
 
  public boolean isResolved() {

@@ -2,8 +2,7 @@ var app = angular.module('app', [ 'ui.bootstrap','ngTable' ]);
 
 app.controller('appController', function($scope, DataService, ngTableParams) {
     
-    $scope.libraries = [{group: "org.springframework", name: "spring-core",version:"4.0.4.RELEASE"},
-                    {group: "merlin", name: "merlin-api",version:"3.3.0"}];
+    $scope.libraries = [];
     
 
     
@@ -34,7 +33,8 @@ app.controller('appController', function($scope, DataService, ngTableParams) {
     };
     
     $scope.getMavenData = function(form) {		
-		
+
+
 	if (form.$valid) {
 	    DataService.getData($scope, {
 		'groupId' : $scope.group,
@@ -53,7 +53,13 @@ app.controller('appController', function($scope, DataService, ngTableParams) {
 		'version' : library.version
 	    });
 
-    };    
+    };  
+    $scope.clear = function() {		
+	alert("clearing...");
+	$scope.data = [];
+	$scope.$apply();
+
+    };     
 
 });
 

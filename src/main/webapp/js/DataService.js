@@ -1,17 +1,14 @@
 app.service('DataService', function() {
 
-	this.getData = function($scope,details) {	
-		gapi.client.maven.maven.getDependencyTree(details).execute(function(resp) {
-			if(!resp.code){
+	this.getData = function($scope,details) {
 
-				
+		gapi.client.maven.maven.getDependencyTree(details).execute(function(resp) {
+			if(!resp.code){				
 				$scope.data = resp;
 				$scope.$apply();
 
 			}else{	
-				alert('fail');	
-
-				
+				alert('fail');					
 			}
 	 });		
 	}
@@ -27,9 +24,7 @@ app.service('DataService', function() {
 				
 
 			}else{	
-				alert('fail');	
-
-				
+				alert('fail');					
 			}
 	 });		
 	}	
