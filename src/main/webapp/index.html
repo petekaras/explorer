@@ -37,6 +37,11 @@
 			<h1>Dependency</h1>
 			<p>Search for Maven artifacts and visualize their dependencies</p>
 		</div>
+		
+		<div>
+		  <alert  type="{{message.type}}" >{{message.msg}}</alert>
+		</div>
+			
 		<tabset justified="true"> <tab heading="Search for an Artifact">
 		<form name="simpleSearchForm" novalidate>
 			<input type="text" ng-model="simpleSearch.artifactId" class="form-control" placeholder="Artifact ID" required=""> <input class="btn btn-primary" type="submit" value="Search"
@@ -72,7 +77,14 @@
 			<li>ng-table</li>
 		</ul>
 
-		</tab> </tabset>
+		</tab> 
+		
+
+		</tabset>
+
+
+
+
 
 
 		<tree-visualization val="data"></tree-visualization>

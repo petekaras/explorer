@@ -3,6 +3,7 @@ var app = angular.module('app', [ 'ui.bootstrap', 'ngTable' ]);
 app.controller('appController', function($scope, DataService,$filter, ngTableParams) {
 
 	$scope.libraries = [];
+	$scope.message = { type: 'success', msg: 'Search for an artifact and the dependcy will be visualized below...' }
 
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
