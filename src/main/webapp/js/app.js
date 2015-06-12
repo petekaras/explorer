@@ -1,5 +1,10 @@
 var app = angular.module('app', [ 'ui.bootstrap', 'ngTable', 'darthwade.loading' ]);
 
+app.controller('hideTableCtrl', function($scope) {
+	$scope.isCollapsed = false;
+});
+
+
 app.controller('appController', function($scope, DataService,$filter, $loading, ngTableParams) {
 
 	$scope.libraries = [];

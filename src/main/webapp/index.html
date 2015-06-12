@@ -52,27 +52,30 @@
 		<div>
 		  <alert  type="{{message.type}}" >{{message.msg}}</alert>
 		</div>
-			
+		
 		<tabset justified="true"> <tab heading="Search for an Artifact">
+
+
+
+		<div ng-controller="hideTableCtrl">
 		<form name="simpleSearchForm" novalidate>
 			<input type="text" ng-model="simpleSearch.artifactId" class="form-control" placeholder="Artifact ID" required=""> <input class="btn btn-primary" type="submit" value="Search"
 				ng-click="getSimpleMavenData(simpleSearchForm,simpleSearch)">
 		</form>
-
-
-					
-		
-		<table ng-table="tableParams" class="table ng-table-responsive">
-			<tbody>
-				<tr ng-repeat="library in $data" ng-click="getMavenDataFromTableClick(library)">
-					<td data-title="'Group Id'" sortable="'groupId'">{{library.group}}</td>
-					<td data-title="'Artifact Id'">{{library.name}}</td>
-					<td data-title="'Latest Version'" sortable="'version'">{{library.version}}</td>
-				</tr>
-			</tbody>
-
-		</table>
-		
+		<button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Hide / Show table data</button>				
+		<div collapse="isCollapsed">
+			<table ng-table="tableParams" class="table ng-table-responsive">
+				<tbody>
+					<tr ng-repeat="library in $data" ng-click="getMavenDataFromTableClick(library)">
+						<td data-title="'Group Id'" sortable="'groupId'">{{library.group}}</td>
+						<td data-title="'Artifact Id'">{{library.name}}</td>
+						<td data-title="'Latest Version'" sortable="'version'">{{library.version}}</td>
+					</tr>
+				</tbody>
+	
+			</table>
+		</div>
+	</div>
  </tab> <tab heading="Display a specific Artifact">
 
 		<form name="search" novalidate>
@@ -86,6 +89,7 @@
 			<li>Angular</li>
 			<li>D3</li>
 			<li>ng-table</li>
+			<li><a href="https://github.com/darthwade/angular-loading">Angular loading project</a></li>
 		</ul>
 
 		</tab> 
