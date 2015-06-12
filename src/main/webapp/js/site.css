@@ -1,3 +1,38 @@
+/**
+* Tables
+*/
 .ng-table {
     border: 0px solid #000;
+    
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
+tr:hover {
+	background: rgba(141, 192, 219, 0.25);
+}
+
+
+
+th{
+	text-align: left !important;
+}
+
+/**
+* Forms 
+*/
+
+.form-control{
+	width: 400px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btn-primary{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
