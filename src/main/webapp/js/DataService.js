@@ -1,11 +1,13 @@
 app.service('DataService', function() {
 
-	this.getData = function($scope,details) {
+	this.getData = function($scope,$loading,details) {
 		var messageText;
 		var messageType;
+
 		gapi.client.maven.maven.getDependencyTree(details).execute(function(resp) {
 			//TODO: refactor messages into a helper service (unit test). Also handle different error code
-
+			
+			
 			if(!resp.code){				
 				$scope.data = resp;
 				messageText = "Showing dependency tree for : " + details.artifactId + "-" + details.version;
@@ -15,6 +17,7 @@ app.service('DataService', function() {
 				messageType = "danger";
 			}
 			$scope.message = { type: messageType, msg: messageText };
+			$loading.finish('libraries');
 			$scope.$apply();
 	 });		
 	}

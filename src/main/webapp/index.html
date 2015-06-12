@@ -27,12 +27,23 @@
 <link href="js/Tree.css" rel="stylesheet">
 <link href="js/table/ng-table.min.css" rel="stylesheet">
 <link href="js/site.css" rel="stylesheet">
+
+<!-- Spinner -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
+<script src="http://rawgithub.com/darthwade/angular-loading/master/angular-loading.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://rawgithub.com/darthwade/angular-loading/master/angular-loading.css"/>
+
 </head>
 
 
 <body ng-app="app" ng-controller="appController">
+<div dw-loading="libraries"  class="users-list">
+
 
 	<div class="container">
+	
+
+	
 		<div class="jumbotron">
 			<h1>Dependency</h1>
 			<p>Search for Maven artifacts and visualize their dependencies</p>
@@ -90,5 +101,5 @@
 		<tree-visualization val="data"></tree-visualization>
 
 	</div>
-
+</div>
 </body>

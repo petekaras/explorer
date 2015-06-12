@@ -1,10 +1,39 @@
-var app = angular.module('app', [ 'ui.bootstrap', 'ngTable' ]);
+var app = angular.module('app', [ 'ui.bootstrap', 'ngTable', 'darthwade.loading' ]);
 
-app.controller('appController', function($scope, DataService,$filter, ngTableParams) {
+app.controller('appController', function($scope, DataService,$filter, $loading, ngTableParams) {
 
 	$scope.libraries = [];
-	$scope.message = { type: 'success', msg: 'Search for an artifact and the dependcy will be visualized below...' }
+	$scope.message = { type: 'success', msg: 'Search for an artifact and the dependcy will be visualized below...' };
 
+	$loading.setDefaultOptions({
+
+			  active: false, // Defines current loading state
+			  text: 'Get dependency data...', // Display text
+			  className: '', // Custom class, added to directive
+			  overlay: true, // Display overlay
+			  spinner: true, // Display spinner
+			  spinnerOptions: {
+			    lines: 12, // The number of lines to draw
+			    length: 7, // The length of each line
+			    width: 4, // The line thickness
+			    radius: 10, // The radius of the inner circle
+			    rotate: 0, // Rotation offset
+			    corners: 1, // Roundness (0..1)
+			    color: '#000', // #rgb or #rrggbb
+			    direction: 1, // 1: clockwise, -1: counterclockwise
+			    speed: 1, // Rounds per second
+			    trail: 100, // Afterglow percentage
+			    opacity: 1 / 4, // Opacity of the lines
+			    fps: 20, // Frames per second when using setTimeout()
+			    zIndex: 2e9, // Use a high z-index by default
+			    className: 'dw-spinner', // CSS class to assign to the element
+			    top: 'auto', // Center vertically
+			    left: 'auto', // Center horizontally
+			    position: 'relative' // Element position
+			  }
+
+	});
+	
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
 		count : 10,
@@ -44,8 +73,8 @@ app.controller('appController', function($scope, DataService,$filter, ngTablePar
 	};
 
 	$scope.getMavenDataFromTableClick = function(library) {
-
-		DataService.getData($scope, {
+		$loading.start('libraries');
+		DataService.getData($scope,$loading, {
 			'groupId' : library.group,
 			'artifactId' : library.name,
 			'version' : library.version
