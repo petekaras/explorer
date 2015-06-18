@@ -1,2 +1,8 @@
 language: java
+
+script:
 mvn test
+
+notifications:
+email:
+- peter@peterkaras.com
