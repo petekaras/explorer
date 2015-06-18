@@ -26,10 +26,20 @@ public class Maven {
   
   
   public POM getDependencyTree(@Named("groupId")String groupID,@Named("artifactId")String artifactId,@Named("version")String version) throws Exception{
-      return MavenCrawler.getPOMWithAllDependencies(groupID,artifactId,version, "-", null);
+    //TODO: validation 
+    
+    //TODO: as part of refactoring use a builder pattern.
+    //MavenCrawler.withGroupId()..
+    //MavenCrawler.withVersion()...
+    //Only artifact ID / group ID is manadatory, otherwise get latest version
+    //MavenCrawler.withCleanVariables().getDependencyTree();
+    String cleanArtifactId = MavenHelper.cleanSearchVariable(artifactId);
+    return MavenCrawler.getPOMWithAllDependencies(groupID,cleanArtifactId,version, "-", null);
   }
   
   public List<POMSummary> getLatestArtifacts(@Named("artifactId")String artifactId){
-    return MavenCrawler.getPOMsByArtifactId(artifactId);
+    //TODO: validation
+    String cleanArtifactId = MavenHelper.cleanSearchVariable(artifactId);
+    return MavenCrawler.getPOMsByArtifactId(cleanArtifactId);
   }
 }
