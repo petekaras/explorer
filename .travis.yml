@@ -2,4 +2,10 @@ language: java
 
 script: 
   - mvn clean install
-  - mvn appengine:update
+
+notifications:
+  email:
+    recipients:
+      - peter@peterkaras.com
+    on_success: always
+    on_failure: always
