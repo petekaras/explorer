@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.api.server.spi.guice.GuiceSystemServiceServletModule;
-import com.pete.crawler.Crawler;
-import com.pete.crawler.MavenCrawler;
+import com.pete.crawler.ProjectBrowser;
+import com.pete.crawler.MavenBrowser;
 import com.pete.endpoint.Constants;
-import com.pete.endpoint.Maven;
+import com.pete.endpoint.ProjectHub;
 
 import dao.POMDAO;
 import dao.POMDAOHTTP;
@@ -26,9 +26,9 @@ public class GuiceSSSModule extends GuiceSystemServiceServletModule{
     super.configureServlets();
 
     Set<Class<?>> serviceClasses = new HashSet<Class<?>>();
-    serviceClasses.add(Maven.class);
+    serviceClasses.add(ProjectHub.class);
     bind(POMDAO.class).to(POMDAOHTTP.class);
-    bind(Crawler.class).to(MavenCrawler.class);
+    bind(ProjectBrowser.class).to(MavenBrowser.class);
 
     this.serveGuiceSystemServiceServlet(Constants.ENDPOINT_URL, serviceClasses);
   }

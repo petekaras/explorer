@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.pete.crawler.MavenCrawler;
+import com.pete.crawler.MavenBrowser;
 
 /**
  * General unit and integration test helper.
@@ -18,7 +18,7 @@ import com.pete.crawler.MavenCrawler;
  *
  */
 public class TestHelper {
-  private static final Logger LOGGER = Logger.getLogger(MavenCrawler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(MavenBrowser.class.getName());
 
   public static String getFileAsString(final String filePath) {
 

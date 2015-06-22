@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.pete.pom.POM;
+import com.pete.pom.Project;
 import com.pete.testtools.TestHelper;
 /**
  * Test extracting more complex POM information 
@@ -24,24 +24,24 @@ public class POMParserComplexTests extends POMTests{
   
   @Test
   public void shouldParseFile() throws Exception {
-    POM pom = pomParser.getPomObject();
+    Project pom = pomParser.getPomObject();
     assertEquals("connid", pom.getArtifactId());
 
   }
   
   @Test
   public void shouldGetParentVersion() throws Exception {
-    POM pom = pomParser.getPomObject();
+    Project pom = pomParser.getPomObject();
     assertEquals("1.4.0.0", pom.getParentPOM().getVersion());
   }
   @Test
   public void shouldGetParentGroupId() throws Exception {
-    POM pom = pomParser.getPomObject();
+    Project pom = pomParser.getPomObject();
     assertEquals("net.tirasa.connid", pom.getParentPOM().getGroupId());
   }
   @Test
   public void shouldGetParentArtifactId() throws Exception {
-    POM pom = pomParser.getPomObject();
+    Project pom = pomParser.getPomObject();
     assertEquals("connid", pom.getParentPOM().getArtifactId());
   }
 }

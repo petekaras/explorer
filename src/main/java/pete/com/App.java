@@ -1,7 +1,7 @@
 package pete.com;
 
-import com.pete.crawler.Crawler;
-import com.pete.crawler.MavenCrawler;
+import com.pete.crawler.ProjectBrowser;
+import com.pete.crawler.MavenBrowser;
 
 import dao.POMDAOHTTP;
 
@@ -15,7 +15,7 @@ public class App
     {
       
         try {
-          Crawler getter = new MavenCrawler(new POMDAOHTTP());
+          ProjectBrowser getter = new MavenBrowser(new POMDAOHTTP());
           
           //POM rootPOM = new POM();
 
@@ -23,7 +23,7 @@ public class App
           //rootPOM.setArtifactId("spring-core");
           //rootPOM.setVersion("4.0.4.RELEASE");
           //POM data = getter.getDependenciesFromPOM(rootPOM, "-",null);
-          getter.getPOMWithAllDependencies("org.springframework", "spring-core", "4.0.4.RELEASE", "-", null);
+          getter.getDependencyTree("org.springframework", "spring-core", "4.0.4.RELEASE", null);
           //sSystem.out.println(data);
         } catch (Exception e) {
           // TODO Auto-generated catch block

@@ -17,6 +17,6 @@ import com.pete.crawler.POMDeserializer;
 
 @JsonDeserialize(using = POMDeserializer.class)
 @JsonProperty(value = "response")
-public List<POMSummary> listOfPoms;
+public List<ProjectSummary> listOfPoms;
 
 }

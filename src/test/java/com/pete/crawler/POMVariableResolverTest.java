@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 
 import com.pete.POMParser;
 import com.pete.POMTests;
-import com.pete.pom.POM;
+import com.pete.pom.Project;
 import com.pete.testtools.TestHelper;
 
 public class POMVariableResolverTest extends POMTests {
@@ -83,8 +83,18 @@ public class POMVariableResolverTest extends POMTests {
   @Test 
   public void shouldIdentifyResolvedNull(){
     boolean result = POMVariableResolver.isResolved("(null)");
-    assertEquals(true, result);
+    assertEquals(false, result);
   } 
+  @Test 
+  public void shouldCopeWithNull(){
+    boolean result = POMVariableResolver.isResolved(null);
+    assertEquals(false, result);
+  } 
+  @Test 
+  public void shouldCopeWithEmptyString(){
+    boolean result = POMVariableResolver.isResolved("");
+    assertEquals(false, result);
+  }   
  
 
   
@@ -104,7 +114,7 @@ public class POMVariableResolverTest extends POMTests {
    * @throws SAXException
    * @throws IOException
    */
-  private POM preparePOMForTest(final String testFile) throws ParserConfigurationException, SAXException, IOException {
+  private Project preparePOMForTest(final String testFile) throws ParserConfigurationException, SAXException, IOException {
     String file = TestHelper.getFileAsString(testFile);
     POMParser pomParser = new POMParser(file);
     return pomParser.getPomObject();

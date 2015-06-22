@@ -11,54 +11,54 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pete.POMTests;
-import com.pete.pom.POM;
-import com.pete.pom.POMSummary;
+import com.pete.pom.Project;
+import com.pete.pom.ProjectSummary;
 import com.pete.testtools.TestHelper;
 
 import dao.POMDAO;
 import dao.POMDAOHTTP;
 
 public class MavenCrawlerGetListTest extends POMTests{
-  private MavenCrawler mavenCrawler;
+  private MavenBrowser mavenCrawler;
   private POMDAO mockPomdao;
   
   
   @Before
   public void setUp() {
     mockPomdao = mock(POMDAO.class);
-    mavenCrawler = new MavenCrawler(mockPomdao);
+    mavenCrawler = new MavenBrowser(mockPomdao);
 
   }
   
   @Test
   public void shouldReturnFromArtifactIdSearch() throws Exception{
     setUpSearchResult(XML_RESULT_FILE_SERACH_FOR_GUICE);
-    List<POMSummary> poms = mavenCrawler.getPOMsByArtifactId("anything-as-the-return-mocked");
+    List<ProjectSummary> poms = mavenCrawler.getArtifactsById("anything-as-the-return-mocked");
     assertEquals(9,poms.size());
 
   }
   @Test
   public void shouldReturnVersionFromArtifactIdSearch() throws Exception{
     setUpSearchResult(XML_RESULT_FILE_SERACH_FOR_GUICE);
-    List<POMSummary> poms = mavenCrawler.getPOMsByArtifactId("anything-as-the-return-mocked");
+    List<ProjectSummary> poms = mavenCrawler.getArtifactsById("anything-as-the-return-mocked");
     assertEquals("0.0.9",poms.get(0).getVersion());
   }
   @Test
   public void shouldReturnGroupFromArtifactIdSearch() throws Exception{
     setUpSearchResult(XML_RESULT_FILE_SERACH_FOR_GUICE);
-    List<POMSummary> poms = mavenCrawler.getPOMsByArtifactId("anything-as-the-return-mocked");
+    List<ProjectSummary> poms = mavenCrawler.getArtifactsById("anything-as-the-return-mocked");
     assertEquals("io.prometheus.client.examples",poms.get(0).getGroupId());
   }  
   @Test
   public void shouldReturnArtifactFromArtifactIdSearch() throws Exception{
     setUpSearchResult(XML_RESULT_FILE_SERACH_FOR_GUICE);
-    List<POMSummary> poms = mavenCrawler.getPOMsByArtifactId("anything-as-the-return-mocked");
+    List<ProjectSummary> poms = mavenCrawler.getArtifactsById("anything-as-the-return-mocked");
     assertEquals("guice",poms.get(0).getArtifactId());
   }   
   @Test
   public void shouldReturnNothingFromArtifactIdSearch() throws Exception{
     setUpSearchResult(XML_RESULT_FILE_SEARCH_FOR_ITEM_NOT_IN_REPO);
-    List<POMSummary> poms = mavenCrawler.getPOMsByArtifactId("anything-as-the-return-mocked");
+    List<ProjectSummary> poms = mavenCrawler.getArtifactsById("anything-as-the-return-mocked");
     assertEquals(0,poms.size());
   }  
   

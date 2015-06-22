@@ -5,7 +5,7 @@ public class ResquestMavenArtifacts implements DataRequest {
 
   @Override
   public String getURL() {
-    return BASE_ENDPOINT_URL + "/pomsummarycollection/" + artifactId;
+    return BASE_ENDPOINT_URL + "/projectsummarycollection/" + artifactId;
   }
 
   public static class Builder {

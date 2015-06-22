@@ -12,24 +12,24 @@ import org.xml.sax.SAXException;
 
 import com.google.inject.Inject;
 import com.pete.POMParser;
-import com.pete.pom.POM;
+import com.pete.pom.Project;
 import com.pete.pom.POMResponse;
-import com.pete.pom.POMSummary;
+import com.pete.pom.ProjectSummary;
 
 import dao.POMDAO;
 
-public class MavenCrawler implements Crawler {
+public class MavenBrowser implements ProjectBrowser {
   // TODO: externalise into a properties file.
   private static final String MAVEN_ROOT = "https://repo1.maven.org/maven2";
   private static final String ARTIFACT_ID_PLACEHOLDER = "<artifactId>";
   private static final int FIND_COUNT = 20;
   private static final String MAVEN_API_ROOT = "http://search.maven.org/solrsearch/select?q=a:" + ARTIFACT_ID_PLACEHOLDER + "&rows=" + FIND_COUNT
       + "&wt=json";
-  private static final Logger LOGGER = Logger.getLogger(MavenCrawler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(MavenBrowser.class.getName());
   private POMDAO pomdao;
 
   @Inject
-  public MavenCrawler(POMDAO pomDao) {
+  public MavenBrowser(POMDAO pomDao) {
     this.pomdao = pomDao;
   }
 
@@ -40,47 +40,51 @@ public class MavenCrawler implements Crawler {
    * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
-  public POM getPOMWithAllDependencies(final String groupID, final String artifactId, final String version, final String indent,
-      final String parentArtifactId) {
-    POM rootPOM = new POM();
-    rootPOM.setArtifactId(artifactId);
-    rootPOM.setGroupId(groupID);
-    rootPOM.setVersion(version);
-    return getDependenciesFromPOM(rootPOM, indent, parentArtifactId);
+  public Project getDependencyTree(final String groupID, final String artifactId, final String version, final String parentArtifactId) {
+    Project rootProject = new Project();
+    rootProject.setArtifactId(artifactId);
+    rootProject.setGroupId(groupID);
+    rootProject.setVersion(version);
+    return initializeProject(rootProject, parentArtifactId);
 
   }
-
-  protected POM getDependenciesFromPOM(final POM rootPOM, final String indent, final String parentArtifactId) {
+/**
+ * Loads project data from the data source including all dependencies.
+ * @param rootProject
+ * @param parentArtifactId
+ * @return
+ */
+  protected Project initializeProject(final Project rootProject, final String parentArtifactId) {
 
     StringBuilder urlStrBuilder = new StringBuilder(MAVEN_ROOT);
-    urlStrBuilder.append("/" + rootPOM.getGroupId().replace(".", "/"));
-    urlStrBuilder.append("/" + rootPOM.getArtifactId());
-    urlStrBuilder.append("/" + rootPOM.getVersion());
-    urlStrBuilder.append("/" + rootPOM.getArtifactId() + "-" + rootPOM.getVersion() + ".pom");
+    urlStrBuilder.append("/" + rootProject.getGroupId().replace(".", "/"));
+    urlStrBuilder.append("/" + rootProject.getArtifactId());
+    urlStrBuilder.append("/" + rootProject.getVersion());
+    urlStrBuilder.append("/" + rootProject.getArtifactId() + "-" + rootProject.getVersion() + ".pom");
     LOGGER.log(Level.INFO, "GETTING: " + urlStrBuilder.toString());
     /*
      * Get XML data from Maven repo
      */
-    String dataFromMaven = null;
+    String rootProjectDataFromMaven = null;
     try {
-      dataFromMaven = (pomdao.getData(urlStrBuilder.toString()));
+      rootProjectDataFromMaven = (pomdao.getData(urlStrBuilder.toString()));
     } catch (IOException ioex) {
-      LOGGER.log(Level.WARNING, "Error getting data for : " + rootPOM.getGroupId() + ":" + rootPOM.getArtifactId() + ":" + rootPOM.getVersion()
+      LOGGER.log(Level.WARNING, "Error getting data for : " + rootProject.getGroupId() + ":" + rootProject.getArtifactId() + ":" + rootProject.getVersion()
           + "  " + ioex.getMessage());
       return null;
     }
-    if (dataFromMaven == null) {
-      LOGGER.log(Level.WARNING, "No data found for: " + rootPOM.getGroupId() + ":" + rootPOM.getArtifactId() + ":" + rootPOM.getVersion());
+    if (rootProjectDataFromMaven == null) {
+      LOGGER.log(Level.WARNING, "No data found for: " + rootProject.getGroupId() + ":" + rootProject.getArtifactId() + ":" + rootProject.getVersion());
       return null;
     }
     /*
      * Parse XML data
      */
-    POMParser pp;
+    POMParser pomParser;
     try {
-      pp = new POMParser(dataFromMaven);
+      pomParser = new POMParser(rootProjectDataFromMaven);
     } catch (ParserConfigurationException | SAXException | IOException e) {
-      LOGGER.log(Level.WARNING, "Error parsing data: " + rootPOM.getGroupId() + ":" + rootPOM.getArtifactId() + ":" + rootPOM.getVersion() + " : "
+      LOGGER.log(Level.WARNING, "Error parsing data: " + rootProject.getGroupId() + ":" + rootProject.getArtifactId() + ":" + rootProject.getVersion() + " : "
           + e.getMessage());
       return null;
     }
@@ -88,22 +92,22 @@ public class MavenCrawler implements Crawler {
     /*
      * Recursively call this method to resolve all dependencies
      */
-    List<POM> poms = pp.getPomObject().getDependencies();
+    List<Project> projects = pomParser.getPomObject().getDependencies();
 
-    for (POM pom : poms) {
-      rootPOM.addDependency(pom);
-      if (pom != null && !rootPOM.getVersion().contains("$") && !pom.getArtifactId().equals(parentArtifactId)) {
-        if(POMVariableResolver.isResolved(pom.getVersion())){
-          getDependenciesFromPOM(pom, indent + "-", parentArtifactId);
+    for (Project project : projects) {
+      rootProject.addDependency(project);
+      if (project != null && !project.getArtifactId().equals(parentArtifactId)) {
+        if(project.isRootInformationResolved()){
+          initializeProject(project, parentArtifactId);
         }
       }
     }
 
-    return rootPOM;
+    return rootProject;
   }
 
   @Override
-  public List<POMSummary> getPOMsByArtifactId(String artifactId) {
+  public List<ProjectSummary> getArtifactsById(String artifactId) {
     String mavenList;
     try {
       String searchURL = MAVEN_API_ROOT.replace(ARTIFACT_ID_PLACEHOLDER, artifactId);

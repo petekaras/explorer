@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.pete.endpoint.Maven;
+import com.pete.endpoint.ProjectHub;
 
 
 

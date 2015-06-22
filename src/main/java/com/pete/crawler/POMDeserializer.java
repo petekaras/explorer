@@ -13,23 +13,23 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import com.google.appengine.repackaged.com.google.protos.gdata.proto2api.Core.Response;
-import com.pete.pom.POM;
+import com.pete.pom.Project;
 import com.pete.pom.POMResponse;
-import com.pete.pom.POMSummary;
+import com.pete.pom.ProjectSummary;
 /**
  * Convert results of Maven search to a list of search Objects.
  * @author peter
  *
  */
-public class POMDeserializer extends JsonDeserializer<List<POMSummary>> {
+public class POMDeserializer extends JsonDeserializer<List<ProjectSummary>> {
 
   @Override
-  public List<POMSummary> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+  public List<ProjectSummary> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
 
     ObjectMapper mapper = new ObjectMapper();
     JsonNode node = mapper.readTree(jsonParser);
 
-    POMSummary[] poms = mapper.convertValue(node.findValue("docs"), POMSummary[].class);
+    ProjectSummary[] poms = mapper.convertValue(node.findValue("docs"), ProjectSummary[].class);
    
     return Arrays.asList(poms);
 

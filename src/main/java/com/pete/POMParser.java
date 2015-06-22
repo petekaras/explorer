@@ -42,7 +42,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.pete.crawler.POMVariableResolver;
-import com.pete.pom.POM;
+import com.pete.pom.Project;
 import com.pete.pom.POMResponse;
 import com.pete.pom.ParentPOM;
 
@@ -54,7 +54,7 @@ import com.pete.pom.ParentPOM;
  * @version $Id$
  */
 public class POMParser {
-  private POM pomObject;
+  private Project pomObject;
   private static String lastDescription;
   private static String lastName;
 
@@ -83,11 +83,11 @@ public class POMParser {
    *
    * @return the parsed pomObject
    */
-  public POM getPomObject() {
+  public Project getPomObject() {
     return pomObject;
   }
 
-  public void setPomObject(POM pomObject) {
+  public void setPomObject(Project pomObject) {
     this.pomObject = pomObject;
   }
 
@@ -100,7 +100,7 @@ public class POMParser {
    * @throws Exception
    */
   public POMParser(File xmlFile) throws Exception {
-    pomObject = new POM();
+    pomObject = new Project();
 
     File fXmlFile = xmlFile;
     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -167,7 +167,7 @@ public class POMParser {
                                                             // 3, ..
               if (depList.item(i).getNodeType() == Node.ELEMENT_NODE) {
 
-                POM pomDependency = new POM();
+                Project pomDependency = new Project();
                 pomDependency.setArtifactId(getTagValue("artifactId", (Element) depList.item(i)));
                 pomDependency.setGroupId(getTagValue("groupId", (Element) depList.item(i)));
                 if (getTagValue("version", (Element) depList.item(i)) != null) {
@@ -201,7 +201,7 @@ public class POMParser {
    * @see POMParser#POMParser(File)
    */
   public POMParser(String xmlFile) throws ParserConfigurationException, SAXException, IOException {
-    pomObject = new POM();
+    pomObject = new Project();
 
     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

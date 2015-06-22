@@ -2,10 +2,10 @@ package com.pete.crawler;
 
 import java.util.List;
 
-import com.pete.pom.POM;
-import com.pete.pom.POMSummary;
+import com.pete.pom.Project;
+import com.pete.pom.ProjectSummary;
 
-public interface Crawler {
+public interface ProjectBrowser {
   /**
    * Get POM data with all data dependencies.
    * Missing POMS will be ignored.
@@ -13,19 +13,18 @@ public interface Crawler {
    * @param groupID
    * @param artifactId
    * @param version
-   * @param indent
    * @param parentArtifactId
    * @return the POM, or null if the POM data is missing
    * @throws Exception
    */
-  public abstract POM getPOMWithAllDependencies(String groupID, String artifactId, String version, String indent, String parentArtifactId);
+  public abstract Project getDependencyTree(String groupID, String artifactId, String version, String parentArtifactId);
 
   /**
    * Find latest POM versions by artifactID
    * @param artifactId 
    * @return list of POMs without dependencies loaded
    */
-  public abstract List<POMSummary> getPOMsByArtifactId(String artifactId);
+  public abstract List<ProjectSummary> getArtifactsById(String artifactId);
 
 
 }

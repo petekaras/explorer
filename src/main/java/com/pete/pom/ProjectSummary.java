@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 @JsonIgnoreProperties({ "id", "repositoryId", "p", "timestamp", "versionCount", "text", "ec" })
-public class POMSummary {
+public class ProjectSummary {
 
   @Expose
   @SerializedName("group")

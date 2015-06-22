@@ -1,9 +1,6 @@
 package com.pete.crawler;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import com.pete.pom.POM;
 
 /**
  * Helper class to help resolve variables in the POM file. Need to cater for:
@@ -53,12 +50,15 @@ public class POMVariableResolver {
   }
 
   /**
-   * Determine if the version number is resolved or a variable
+   * Determine if a variable is resolved.
+   * Helps to identify variable that have not had placeholders eg: ${value} substtituted
    * 
-   * @param version
+   * @param value
    * @return
    */
-  public static boolean isResolved(final String version) {
-    return (!version.contains(VARIABLE_PREFIX) || !version.contains(VARIABLE_SUFFIX) || version.contains(NULL_VERSION) );
+  public static boolean isResolved(final String value) {
+    if(value==null)return false;
+    if(value.isEmpty())return false;
+    return (!value.contains(VARIABLE_PREFIX) && !value.contains(VARIABLE_SUFFIX) && !value.contains(NULL_VERSION) );
   }
 }
