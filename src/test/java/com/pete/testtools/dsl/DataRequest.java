@@ -5,6 +5,6 @@ package com.pete.testtools.dsl;
  *
  */
 public interface DataRequest {
-public static String BASE_ENDPOINT_URL = "http://localhost:8080/_ah/api/projectHub/v1";
+public static String BASE_ENDPOINT_URL = "http://localhost:8080/_ah/api/dependency/v1";
 public String getURL();
 }

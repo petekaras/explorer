@@ -19,12 +19,7 @@ public interface ProjectBrowser {
    */
   public abstract Project getDependencyTree(String groupID, String artifactId, String version, String parentArtifactId);
 
-  /**
-   * Find latest POM versions by artifactID
-   * @param artifactId 
-   * @return list of POMs without dependencies loaded
-   */
-  public abstract List<ProjectSummary> getArtifactsById(String artifactId);
+
 
 
 }

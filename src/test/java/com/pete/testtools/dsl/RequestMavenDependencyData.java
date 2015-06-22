@@ -7,7 +7,7 @@ public class RequestMavenDependencyData implements DataRequest{
 
   
   public String getURL(){
-    return BASE_ENDPOINT_URL +"/project/" +groupId+"/"+artifactId+"/"+version;
+    return BASE_ENDPOINT_URL +"/artifact/" +groupId+"/"+artifactId+"/"+version;
   }
   
   public static class Builder {

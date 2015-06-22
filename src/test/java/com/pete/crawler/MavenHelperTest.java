@@ -1,10 +1,10 @@
-package com.pete.endpoint;
+package com.pete.crawler;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.pete.endpoint.MavenHelper;
+import com.pete.crawler.MavenHelper;
 
 public class MavenHelperTest {
 
@@ -13,5 +13,6 @@ public class MavenHelperTest {
     String result = MavenHelper.cleanSearchVariable("UpperAndLOWEr");
     assertEquals("upperandlower", result);
   }
+  
 
 }

@@ -111,7 +111,7 @@ public class ProjectParser {
       }
 
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, e.getMessage());
+      LOGGER.log(Level.WARNING, "Error Parsing POM :" + e.getMessage());
     }
   }
 
@@ -146,7 +146,7 @@ public class ProjectParser {
       Node nValue = (Node) nlList.item(0);
       returner = nValue.getNodeValue();
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, e.getMessage());
+      LOGGER.log(Level.WARNING, "error getting tag: "+ sTag + " : " + e.getMessage());
     }
     return returner;
   }

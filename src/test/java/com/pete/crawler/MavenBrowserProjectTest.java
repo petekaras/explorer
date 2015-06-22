@@ -13,14 +13,14 @@ import org.junit.internal.runners.statements.Fail;
 
 import com.pete.POMTests;
 import com.pete.crawler.ProjectBrowser;
-import com.pete.crawler.MavenBrowser;
+import com.pete.crawler.MavenDetail;
 import com.pete.pom.Project;
 import com.pete.testtools.TestHelper;
 
 import dao.POMDAO;
 
 public class MavenBrowserProjectTest extends POMTests {
-  private MavenBrowser mavenBrowser;
+  private MavenDetail mavenBrowser;
   private POMDAO mockPomdao;
   String indent;
   String parentArtifactId;
@@ -29,7 +29,7 @@ public class MavenBrowserProjectTest extends POMTests {
   @Before
   public void setUp() throws Exception {
     mockPomdao = mock(POMDAO.class);
-    mavenBrowser = new MavenBrowser(mockPomdao);
+    mavenBrowser = new MavenDetail(mockPomdao);
     rootPOM = new Project();
     rootPOM.setArtifactId("pete");
     rootPOM.setGroupId("test");

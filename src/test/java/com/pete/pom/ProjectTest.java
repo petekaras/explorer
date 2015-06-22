@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.pete.crawler.MavenBrowser;
+import com.pete.crawler.MavenDetail;
 
 import dao.POMDAO;
 

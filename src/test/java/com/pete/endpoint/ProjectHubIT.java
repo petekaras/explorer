@@ -18,13 +18,13 @@ import com.pete.testtools.dsl.ResquestMavenArtifacts;
  * @author peter
  *
  */
-public class MavenIT extends IntegrationTest{
+public class ProjectHubIT extends IntegrationTest{
   @Test
   public void shouldgetMavenDependencies() throws ClientProtocolException, IOException, InterruptedException {
 
     String url = new RequestMavenDependencyData.Builder().groupId("org.springframework").artifactId("spring-core").version("4.0.4.RELEASE").build().getURL();
     System.out.println("GETTING: " + url);
-    String result = get(url);   
+    String result = post(url);   
     
     /**
      * Test just to see if our requested data contains real data
@@ -33,26 +33,39 @@ public class MavenIT extends IntegrationTest{
 
   }
   
-  @Test @Ignore("Fails with a circular dependency")
-  public void shouldgetMavenDependenciesAndVariables() throws ClientProtocolException, IOException, InterruptedException {
+  @Test 
+  public void shouldReturnNotFoundForArtifact() throws ClientProtocolException, IOException, InterruptedException {
 
-    String url = new RequestMavenDependencyData.Builder().groupId("org.seleniumhq.webdriver").artifactId("webdriver-selenium").version("0.9.7376").build().getURL();
-    System.out.println("GETTING: " + url);
-    String result = get(url);   
+    String url = new RequestMavenDependencyData.Builder().groupId("some.silly.group").artifactId("webdriver-selenium").version("0.9.7376").build().getURL();
+    String result = post(url);   
     
     /**
-     * Test just to see if our requested data contains real data
+     * Test for 404 code
      */
-    assertEquals(true, result.contains("org.slf4j"));
+    assertEquals(true, result.contains("404"));
 
   }
+  
+  @Test 
+  public void shouldReturnNotFoundForArtifacts() throws ClientProtocolException, IOException, InterruptedException {
+
+    String url = new ResquestMavenArtifacts.Builder().artifactId("sillArtifact").build().getURL();    
+    String result = post(url); 
+    
+    /**
+     * Test for 404 code
+     */
+    assertEquals(true, result.contains("404"));
+
+  }
+
+
   
   @Test
   public void shouldgetSomeArtifacts() throws ClientProtocolException, IOException, InterruptedException {
 
-    String url = new ResquestMavenArtifacts.Builder().artifactId("guice").build().getURL();
-    System.out.println("GETTING: " + url);
-    String result = get(url);   
+    String url = new ResquestMavenArtifacts.Builder().artifactId("guice").build().getURL();    
+    String result = post(url);   
     
     /**
      * Test just to see if our requested data contains the correct structure

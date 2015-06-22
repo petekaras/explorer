@@ -1,7 +1,7 @@
 package pete.com;
 
 import com.pete.crawler.ProjectBrowser;
-import com.pete.crawler.MavenBrowser;
+import com.pete.crawler.MavenDetail;
 
 import dao.POMDAOHTTP;
 
@@ -15,7 +15,7 @@ public class App
     {
       
         try {
-          ProjectBrowser getter = new MavenBrowser(new POMDAOHTTP());
+          ProjectBrowser getter = new MavenDetail(new POMDAOHTTP());
           
           //POM rootPOM = new POM();
 
