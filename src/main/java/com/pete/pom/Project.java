@@ -45,7 +45,7 @@ public class Project {
 
   private Map<String, String> properties;
 
-  private ParentPOM parentPOM;
+  //private ParentPOM parentPOM;
 
   /**
    * Wether this POM has all its information resolved
@@ -56,13 +56,13 @@ public class Project {
     return false;
   }
 
-  public ParentPOM getParentPOM() {
-    return parentPOM;
-  }
-
-  public void setParentPOM(ParentPOM parentPOM) {
-    this.parentPOM = parentPOM;
-  }
+//  public ParentPOM getParentPOM() {
+//    return parentPOM;
+//  }
+//
+//  public void setParentPOM(ParentPOM parentPOM) {
+//    this.parentPOM = parentPOM;
+//  }
 
   public Project() {
     groupId = "(null)";

@@ -33,8 +33,9 @@ public class POMVariableResolver {
   }
 
   /**
-   * Determine the project version. this could be directly set in the POM or in
-   * the parent POM element
+   * Determine the project version. this could be directly set in the POM
+   * information ${version} or could also be the parent POM information {project.version} in the parent POM
+   * element
    * 
    * @param version
    * @return
@@ -50,15 +51,17 @@ public class POMVariableResolver {
   }
 
   /**
-   * Determine if a variable is resolved.
-   * Helps to identify variable that have not had placeholders eg: ${value} substtituted
+   * Determine if a variable is resolved. Helps to identify variable that have
+   * not had placeholders eg: ${value} substtituted
    * 
    * @param value
    * @return
    */
   public static boolean isResolved(final String value) {
-    if(value==null)return false;
-    if(value.isEmpty())return false;
-    return (!value.contains(VARIABLE_PREFIX) && !value.contains(VARIABLE_SUFFIX) && !value.contains(NULL_VERSION) );
+    if (value == null)
+      return false;
+    if (value.isEmpty())
+      return false;
+    return (!value.contains(VARIABLE_PREFIX) && !value.contains(VARIABLE_SUFFIX) && !value.contains(NULL_VERSION));
   }
 }

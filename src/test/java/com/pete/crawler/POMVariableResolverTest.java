@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import com.pete.POMParser;
+import com.pete.ProjectParser;
 import com.pete.POMTests;
 import com.pete.pom.Project;
 import com.pete.testtools.TestHelper;
@@ -116,7 +116,7 @@ public class POMVariableResolverTest extends POMTests {
    */
   private Project preparePOMForTest(final String testFile) throws ParserConfigurationException, SAXException, IOException {
     String file = TestHelper.getFileAsString(testFile);
-    POMParser pomParser = new POMParser(file);
-    return pomParser.getPomObject();
+    ProjectParser pomParser = new ProjectParser(file);
+    return pomParser.getProject();
   }
 }

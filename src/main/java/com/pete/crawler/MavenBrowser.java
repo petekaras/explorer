@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.xml.sax.SAXException;
 
 import com.google.inject.Inject;
-import com.pete.POMParser;
+import com.pete.ProjectParser;
 import com.pete.pom.Project;
 import com.pete.pom.POMResponse;
 import com.pete.pom.ProjectSummary;
@@ -50,6 +50,7 @@ public class MavenBrowser implements ProjectBrowser {
   }
 /**
  * Loads project data from the data source including all dependencies.
+ * Recursively call on all dependencies.
  * @param rootProject
  * @param parentArtifactId
  * @return
@@ -80,9 +81,9 @@ public class MavenBrowser implements ProjectBrowser {
     /*
      * Parse XML data
      */
-    POMParser pomParser;
+    ProjectParser projectParser;
     try {
-      pomParser = new POMParser(rootProjectDataFromMaven);
+      projectParser = new ProjectParser(rootProjectDataFromMaven);
     } catch (ParserConfigurationException | SAXException | IOException e) {
       LOGGER.log(Level.WARNING, "Error parsing data: " + rootProject.getGroupId() + ":" + rootProject.getArtifactId() + ":" + rootProject.getVersion() + " : "
           + e.getMessage());
@@ -92,7 +93,7 @@ public class MavenBrowser implements ProjectBrowser {
     /*
      * Recursively call this method to resolve all dependencies
      */
-    List<Project> projects = pomParser.getPomObject().getDependencies();
+    List<Project> projects = projectParser.getProject().getDependencies();
 
     for (Project project : projects) {
       rootProject.addDependency(project);
