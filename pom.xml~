@@ -18,8 +18,6 @@
     </prerequisites>
 
   <dependencies>
-
-
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk</artifactId>
@@ -76,7 +74,23 @@
 		<artifactId>httpclient</artifactId>
 		<version>4.4.1</version>
 	</dependency>
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>1.3.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.8.5</version>
+	</dependency>
 
+
+	<dependency>
+	  <groupId>org.apache.maven</groupId>
+	  <artifactId>maven-model</artifactId>
+	  <version>3.2.5</version>
+	</dependency>
 
 <!-- TEST-->
         <dependency>
@@ -103,22 +117,12 @@
             <version>1.9.18</version>
             <scope>test</scope>
         </dependency>
-
 	<dependency>
 		<groupId>com.googlecode.json-simple</groupId>
 		<artifactId>json-simple</artifactId>
 		<version>1.1.1</version>
           	<scope>test</scope>
 	</dependency>
-	<dependency>
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-io</artifactId>
-		<version>1.3.2</version>
-		  <scope>test</scope>
-	</dependency>
-
-
-
 	<dependency>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-lang3</artifactId>

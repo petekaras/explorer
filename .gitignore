@@ -1,7 +1,11 @@
 *.swp
 *.swo
 *~
+#Maven
 target
 .classpath
 .project
 .settings
+#Gradle
+build
+.gradle
